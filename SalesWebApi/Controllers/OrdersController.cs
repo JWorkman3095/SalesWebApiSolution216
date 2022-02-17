@@ -19,6 +19,22 @@ namespace SalesWebApi.Controllers
         {
             _context = context;
         }
+        // Updating the order
+        //PUT : api/Orders/Recalc/5
+        [HttpPut("recalc/{orderId}")]
+        public async Task<IActionResult> RecalculateOrder(int orderId) {
+            //read the order
+            var order = await _context.Orders.FindAsync(orderId);
+            //calcu sum of the lines n the order
+            var sum = order.Orderlines.Sum(x => x.Quantity * x.Price);
+
+            order.Total = sum;
+
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
 
         // GET: api/Orders
         [HttpGet]
