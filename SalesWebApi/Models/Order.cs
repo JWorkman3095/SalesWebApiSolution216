@@ -18,6 +18,9 @@ namespace SalesWebApi.Models {
 
         public int CustomerId { get; set; }
         public virtual Customer Customer { get; set;}
+        // allows us to ask EF to fill in all the line items
+        // virtual so it doesn't afftect the dBase
+        public virtual IEnumerable<Orderline> Orderlines { get; set; }
 
         public Order() { }
 
